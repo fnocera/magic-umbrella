@@ -1,0 +1,30 @@
+# Claude Code Project Configuration
+
+## Project Overview
+This is a Python project using uv for dependency management and Ruff for linting/formatting.
+
+## Development Workflow
+
+### Setup
+- Use `uv sync` to install dependencies
+- Use `uv sync --extra dev` for development dependencies
+
+### Testing
+- Run tests with: `uv run pytest`
+- Tests are located in the `tests/` directory
+
+### Code Quality
+- Linting: `uv run ruff check .`
+- Formatting: `uv run ruff format .`
+- Auto-fix: `uv run ruff check --fix .`
+
+## Coding Standards
+- Python 3.9+ required
+- Max line length: 100 characters
+- Follow PEP 8 style guide
+- Use Ruff for formatting and linting
+
+## Important Notes
+- Always run tests before committing changes
+- Format code with Ruff before submitting
+- Keep dependencies minimal and well-documented
