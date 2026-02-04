@@ -1,60 +1,148 @@
-# magic-umbrella
+# Magic Umbrella ☔
 
-A Python project.
+**Calendar-Based Time Allocation System**
 
-## Setup
+An intelligent Python tool that analyzes your Microsoft Outlook/Teams calendar meetings to automatically determine time allocation across customers, projects, and activities.
 
-This project uses [uv](https://github.com/astral-sh/uv) for dependency management.
+## Problem
 
-### Install uv
+- Manual time tracking is tedious and error-prone
+- Hard to remember how time was spent across the week
+- Meetings don't capture prep time or follow-up work
+- Different naming conventions make categorization difficult
+
+## Solution
+
+Magic Umbrella automatically:
+- 🔐 Authenticates with Microsoft Graph API (OAuth 2.0)
+- 📅 Fetches your calendar events for any date range
+- 🤖 Categorizes meetings using hybrid AI (rules + LLM)
+- ⏱️ Calculates time allocation by customer/project/type
+- ✏️ Lets you interactively adjust and fill unallocated time
+- 📊 Generates reports for timesheets
+
+## Key Features
+
+- **Hybrid Categorization**: Rule-based patterns + Azure OpenAI for ambiguous cases
+- **Interactive Validation**: Review classifications, add prep/follow-up time
+- **Time Filling**: Allocate non-meeting hours to background projects
+- **CSV Export**: Easy integration with timesheet systems
+- **Secure**: OAuth 2.0, encrypted token storage
+
+## Quick Start
+
+### Prerequisites
+
+- Python 3.9+
+- Microsoft 365 account
+- Azure subscription (for app registration and Azure OpenAI)
+
+### Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/fnocera/magic-umbrella.git
+   cd magic-umbrella
+   ```
+
+2. **Install dependencies**
+   ```bash
+   uv sync --extra dev
+   ```
+
+3. **Configure environment**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your Azure credentials
+   ```
+
+4. **Register Azure app** (see `plan/details/phase-0-azure-registration.md`)
+
+5. **Configure customers and projects**
+   ```bash
+   cp config/customers.example.yaml config/customers.yaml
+   cp config/projects.example.yaml config/projects.yaml
+   # Edit with your customers and projects
+   ```
+
+## Usage
 
 ```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-```
+# Analyze current week
+uv run python -m magic_umbrella analyze --week current
 
-### Install dependencies
+# Analyze specific date range
+uv run python -m magic_umbrella analyze --start 2026-02-03 --end 2026-02-09
 
-```bash
-uv sync
-```
-
-Or with development dependencies:
-
-```bash
-uv sync --extra dev
+# Export to CSV
+uv run python -m magic_umbrella export --week current --output timesheet.csv
 ```
 
 ## Development
 
-### Run tests
+### Dev Container (Recommended)
+
+```bash
+# Open in VS Code
+code .
+# Reopen in Container (Cmd/Ctrl + Shift + P)
+```
+
+### Run Tests
 
 ```bash
 uv run pytest
+uv run pytest --cov=magic_umbrella
 ```
 
-### Linting and formatting
+### Code Quality
 
-This project uses [Ruff](https://github.com/astral-sh/ruff) for linting and formatting.
-
-Check code:
 ```bash
 uv run ruff check .
-```
-
-Format code:
-```bash
 uv run ruff format .
 ```
 
-Fix issues automatically:
-```bash
-uv run ruff check --fix .
+## Project Structure
+
+```
+magic-umbrella/
+├── src/magic_umbrella/     # Main package
+│   ├── auth/               # OAuth 2.0 authentication
+│   ├── calendar/           # Microsoft Graph integration
+│   ├── categorization/     # Meeting classification
+│   ├── reporting/          # Time allocation & reports
+│   └── config/             # Configuration management
+├── tests/                   # Test suite
+├── config/                  # YAML configuration files
+├── docs/                    # Documentation
+└── plan/                    # Implementation plan
 ```
 
-## Usage
+## Technology Stack
 
-```python
-from magic_umbrella import example
+- **Python 3.9+**: Core language
+- **Microsoft Graph API**: Calendar access
+- **Azure OpenAI**: LLM-based classification
+- **MSAL**: Microsoft authentication
+- **Rich**: Beautiful terminal output
+- **Typer**: CLI framework
+- **Ruff**: Linting and formatting
 
-example.hello()
-```
+## Documentation
+
+- [Implementation Plan](plan/plan.md)
+- [Research Document](research/initial-research.md)
+- [Azure Setup Guide](plan/details/phase-0-azure-registration.md)
+- [Dev Environment Setup](plan/details/phase-0-dev-environment.md)
+
+## Contributing
+
+This project was built with AI assistance from Claude. Pull requests welcome!
+
+## License
+
+MIT License - See LICENSE file for details
+
+## Acknowledgments
+
+Built with ❤️ by Federica Nocera with assistance from Claude (Anthropic)

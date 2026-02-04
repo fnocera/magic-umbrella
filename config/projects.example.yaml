@@ -1,0 +1,37 @@
+# Project Configuration
+# Copy this file to projects.yaml and customize for your organization
+# This file is used to identify project-related meetings
+
+projects:
+  # Customer project example
+  - name: "Project Alpha"
+    aliases:
+      - "Alpha"
+      - "Proj-Alpha"
+      - "Alpha Initiative"
+    customer: "Contoso Corporation"  # Links to customer
+    type: "customer"
+    active: true
+
+  # Internal project example
+  - name: "Platform Migration"
+    aliases:
+      - "Platform Mig"
+      - "Migration Project"
+    customer: null  # No associated customer
+    type: "internal"
+    active: true
+
+  # Completed project example
+  - name: "Legacy System Upgrade"
+    aliases:
+      - "Legacy Upgrade"
+    type: "internal"
+    active: false  # Completed projects
+
+  # Add your projects here
+  # - name: "Project Name"
+  #   aliases: ["Alias1"]
+  #   customer: "Customer Name" or null
+  #   type: "customer" or "internal"
+  #   active: true or false

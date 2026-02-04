@@ -1,0 +1,42 @@
+# Customer Configuration
+# Copy this file to customers.yaml and customize for your organization
+# This file is used by the classifier to identify customer meetings
+
+customers:
+  # Example customer 1
+  - name: "Contoso Corporation"
+    # Alternative names found in meeting titles
+    aliases:
+      - "Contoso"
+      - "Contoso Corp"
+      - "Contoso Ltd"
+    # Email domains for attendee matching
+    domains:
+      - "contoso.com"
+      - "contoso.net"
+    # Optional: Color for reports (hex code)
+    color: "#FF6B6B"
+
+  # Example customer 2
+  - name: "Fabrikam Inc"
+    aliases:
+      - "Fabrikam"
+      - "Fabrikam Industries"
+    domains:
+      - "fabrikam.com"
+    color: "#4ECDC4"
+
+  # Example customer 3
+  - name: "Northwind Traders"
+    aliases:
+      - "Northwind"
+      - "Northwind Co"
+    domains:
+      - "northwind.com"
+    color: "#45B7D1"
+
+  # Add your customers here
+  # - name: "Customer Name"
+  #   aliases: ["Alias1", "Alias2"]
+  #   domains: ["example.com"]
+  #   color: "#HEXCODE"

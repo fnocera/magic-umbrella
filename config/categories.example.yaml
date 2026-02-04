@@ -1,0 +1,99 @@
+# Meeting Category Configuration
+# This file defines meeting types and keywords for detection
+
+meeting_types:
+  # Customer-facing meetings
+  - name: "Customer Meeting"
+    description: "External meetings with customers"
+    keywords:
+      - "customer"
+      - "client"
+      - "external"
+      - "demo"
+      - "presentation"
+    color: "#FF6B6B"
+    priority: 10  # Higher priority = checked first
+
+  # Internal project work
+  - name: "Internal Project"
+    description: "Work on internal projects and initiatives"
+    keywords:
+      - "internal"
+      - "project"
+      - "development"
+      - "feature"
+      - "sprint"
+    color: "#4ECDC4"
+    priority: 9
+
+  # One-on-one meetings
+  - name: "1:1 Meeting"
+    description: "One-on-one meetings with colleagues"
+    keywords:
+      - "1:1"
+      - "1-1"
+      - "one on one"
+      - "one-on-one"
+      - "check in"
+      - "skip level"
+    color: "#45B7D1"
+    priority: 8
+
+  # Team meetings
+  - name: "Team Meeting"
+    description: "Team syncs, standups, and all-hands"
+    keywords:
+      - "team sync"
+      - "team meeting"
+      - "standup"
+      - "daily scrum"
+      - "all hands"
+      - "weekly sync"
+    color: "#96CEB4"
+    priority: 7
+
+  # Administrative tasks
+  - name: "Administrative"
+    description: "Admin work, HR, expenses, etc."
+    keywords:
+      - "admin"
+      - "hr"
+      - "human resources"
+      - "expense"
+      - "timesheet"
+      - "benefits"
+      - "onboarding"
+    color: "#FFEAA7"
+    priority: 6
+
+  # Training and development
+  - name: "Training"
+    description: "Learning, workshops, courses"
+    keywords:
+      - "training"
+      - "workshop"
+      - "course"
+      - "learning"
+      - "certification"
+      - "lunch and learn"
+    color: "#DFE6E9"
+    priority: 5
+
+  # Social/informal
+  - name: "Social"
+    description: "Coffee chats, social events"
+    keywords:
+      - "coffee chat"
+      - "social"
+      - "happy hour"
+      - "team lunch"
+      - "celebration"
+    color: "#FDCB6E"
+    priority: 4
+
+  # Uncategorized fallback
+  - name: "Uncategorized"
+    description: "Could not be categorized"
+    keywords: []
+    color: "#B2BEC3"
+    priority: 0

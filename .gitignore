@@ -19,12 +19,22 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
 # Virtual environments
 venv/
 env/
 ENV/
-.venv
+.venv/
+.uv/
+
+# Testing
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
 
 # IDEs
 .vscode/
@@ -32,16 +42,29 @@ ENV/
 *.swp
 *.swo
 *~
-
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
-.tox/
-
-# uv
-.uv/
-
-# OS
 .DS_Store
-Thumbs.db
+
+# Environment variables (secrets!)
+.env
+.env.local
+*.pem
+*.key
+
+# Configuration files with secrets
+config/customers.yaml
+config/projects.yaml
+config/categories.yaml
+
+# Azure & Microsoft
+*.azurite/
+
+# Project specific
+research/initial-research-plan.md
+plan/DETAIL_FILES_STATUS.md
+
+# Logs
+*.log
+logs/
+
+# CI/CD
+.github/
