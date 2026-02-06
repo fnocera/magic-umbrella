@@ -89,7 +89,7 @@ def main():
         # Calculate new total
         background_hours = sum(background_allocations.values())
         total_hours = total_meeting_hours + background_hours
-        print(f"\n[bold]Total allocated hours: {total_hours:.1f}h[/bold]")
+        print(f"\nTotal allocated hours: {total_hours:.1f}h")
 
     print("\n" + "=" * 60)
     print("Demo complete! 🎉")

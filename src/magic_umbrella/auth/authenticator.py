@@ -1,5 +1,6 @@
 """OAuth 2.0 authentication with Microsoft Identity Platform using MSAL."""
 
+import html
 import os
 import secrets
 import webbrowser
@@ -58,6 +59,7 @@ class CallbackHandler(BaseHTTPRequestHandler):
         elif "error" in params:
             CallbackHandler.error = params["error"][0]
             error_description = params.get("error_description", ["Unknown error"])[0]
+            safe_description = html.escape(error_description)
 
             # Send error response to browser
             self.send_response(400)
@@ -69,7 +71,7 @@ class CallbackHandler(BaseHTTPRequestHandler):
             <head><title>Authentication Failed</title></head>
             <body style="font-family: Arial; text-align: center; padding: 50px;">
                 <h1 style="color: red;">✗ Authentication Failed</h1>
-                <p>{error_description}</p>
+                <p>{safe_description}</p>
                 <p>You can close this window and try again.</p>
             </body>
             </html>
@@ -226,53 +228,47 @@ class MicrosoftAuthenticator:
 
         return result
 
-    def acquire_token_by_refresh_token(self, refresh_token: str) -> dict[str, str]:
-        """Refresh access token using refresh token.
+    def acquire_token_silent(self) -> dict[str, str]:
+        """Acquire token silently using MSAL's internal token cache.
 
-        Args:
-            refresh_token: Refresh token from previous authentication
+        MSAL manages refresh tokens internally, so this method attempts
+        to get a valid token from the cache (refreshing automatically if needed).
 
         Returns:
             Dictionary containing new access_token and other token info
 
         Raises:
-            RuntimeError: If token refresh fails
+            RuntimeError: If silent token acquisition fails
         """
-        # MSAL handles refresh tokens internally via acquire_token_silent
-        # But we can also manually refresh if needed
         accounts = self.app.get_accounts()
 
         if not accounts:
             raise RuntimeError("No accounts found. Please re-authenticate.")
 
-        # Try to get token silently (uses refresh token automatically)
         result = self.app.acquire_token_silent(scopes=self.scopes, account=accounts[0])
 
         if not result:
-            raise RuntimeError("Failed to refresh token. Please re-authenticate.")
+            raise RuntimeError("Failed to acquire token silently. Please re-authenticate.")
 
         if "error" in result:
             error_desc = result.get("error_description", result["error"])
-            raise RuntimeError(f"Failed to refresh token: {error_desc}")
+            raise RuntimeError(f"Failed to acquire token silently: {error_desc}")
 
         return result
 
     def is_token_valid(self, token: dict[str, str]) -> bool:
-        """Check if access token is still valid.
+        """Check if access token appears valid based on MSAL token metadata.
+
+        Note: For reliable expiration checks, prefer acquire_token_silent()
+        which handles expiration and refresh automatically via MSAL's cache.
 
         Args:
-            token: Token dictionary containing 'expires_in' or 'expires_at'
+            token: Token dictionary from MSAL (may contain 'expires_in' or 'id_token_claims')
 
         Returns:
-            True if token is valid, False otherwise
+            True if token contains an access_token, False otherwise
         """
-        # MSAL handles token expiration automatically
-        # This is a utility method for explicit checks
-        if "expires_in" in token:
-            return token["expires_in"] > 60  # Buffer of 60 seconds
-
-        # If using token cache, MSAL will handle expiration
-        return True
+        return "access_token" in token and bool(token["access_token"])
 
 
 # Utility function for quick authentication

@@ -3,7 +3,7 @@
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 
 class Attendee(BaseModel):
@@ -33,12 +33,13 @@ class CalendarEvent(BaseModel):
     categories: list[str] = Field(default_factory=list)
     importance: str = "normal"  # low, normal, high
 
-    def __init__(self, **data):
-        """Initialize event and calculate duration."""
-        super().__init__(**data)
+    @model_validator(mode="after")
+    def _calculate_duration(self) -> "CalendarEvent":
+        """Calculate duration from start/end if not explicitly set."""
         if self.duration_hours == 0.0:
             delta = self.end - self.start
             self.duration_hours = delta.total_seconds() / 3600
+        return self
 
 
 class CategorizedEvent(BaseModel):
